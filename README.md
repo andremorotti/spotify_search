@@ -9,8 +9,8 @@ Este é um aplicativo React que consome a API do Spotify que busca um artista e 
 
 ### 1. Clonar o Repositório
 ```sh
-git clone https://github.com/seu-usuario/spotify-react-app.git
-cd spotify-react-app/
+git clone https://github.com/andremorotti/spotify_search.git
+cd 
 ```
 
 ### 2. Instalar Dependências
