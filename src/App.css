@@ -1,0 +1,21 @@
+.App {
+  text-align: center;
+  background-color: #6a0dad; /* Roxo */
+  color: white; /* Letras brancas */
+  min-height: 100vh; /* Garante que o fundo cubra toda a altura da tela */
+  padding: 20px; /* Adiciona um pouco de padding ao redor do conteúdo */
+}
+
+.container:first-of-type {
+  margin-bottom: 40px; /* Aumenta o espaçamento abaixo dos top tracks */
+}
+
+.container:last-of-type {
+  margin-top: 40px; /* Aumenta o espaçamento acima dos albums */
+}
+
+.card {
+  background-color: #4b0082; /* Roxo mais escuro para os cards */
+  color: white; /* Letras brancas nos cards */
+  margin-bottom: 20px; /* Espaçamento entre os cards */
+}
