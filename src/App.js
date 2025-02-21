@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, InputGroup, FormControl, Button, Row, Card, ListGroup } from 'react-bootstrap';
@@ -13,8 +12,14 @@ function App() {
   const [albums, setAlbums] = useState([]);
   const [tracks, setTracks] = useState({});
   const [topTracks, setTopTracks] = useState([]);
+  const [configError, setConfigError] = useState(false);
 
   useEffect(() => {
+    if (CLIENT_ID === "SUA_CLIENT_ID" || CLIENT_SECRET === "SEU_CLIENT_SECRET") {
+      setConfigError(true);
+      return;
+    }
+
     // Token
     var authParameters = {
       method: 'POST',
@@ -65,6 +70,10 @@ function App() {
   }
 
   async function search() {
+    if (!searchInput.trim()) {
+      return; // Não faz nada se a entrada estiver vazia
+    }
+
     var searchParameters = {
       method: 'GET',
       headers: {
@@ -90,55 +99,63 @@ function App() {
 
   return (
     <div className="App">
-      
-      <Container>
-        <InputGroup className='mb-3' size='lg'>
-          <FormControl
-            placeholder='Search for Artist'
-            type='input'
-            onKeyPress={event => {
-              if (event.key === "Enter") {
-                search();
-              }
-            }}
-            onChange={event => setSearchInput(event.target.value)}
-          />
-          <Button onClick={search}>
-            Search
-          </Button>
-        </InputGroup>
-      </Container>
+      {configError ? (
+        <Container className="mt-3">
+          <h3 style={{ color: "red", textAlign: "center" }}>
+            ⚠️ Configuração necessária: Substitua CLIENT_ID e CLIENT_SECRET. Consulte o README para mais informações.
+          </h3>
+        </Container>
+      ) : (
+        <>
+          <Container>
+            <InputGroup className='mb-3' size='lg'>
+              <FormControl
+                placeholder='Search for Artist'
+                type='input'
+                onKeyPress={event => {
+                  if (event.key === "Enter") {
+                    search();
+                  }
+                }}
+                onChange={event => setSearchInput(event.target.value)}
+              />
+              <Button onClick={search}>
+                Search
+              </Button>
+            </InputGroup>
+          </Container>
 
-      <Container>
-        <h2>Top Tracks</h2>
-        <ListGroup>
-          {topTracks.map((track, i) => (
-            <ListGroup.Item key={i}>
-              {track.name} - {track.artists.map(artist => artist.name).join(", ")}
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
-      </Container>
+          <Container>
+            <h2>Top Tracks</h2>
+            <ListGroup>
+              {topTracks.map((track, i) => (
+                <ListGroup.Item key={i}>
+                  {track.name} - {track.artists.map(artist => artist.name).join(", ")}
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          </Container>
 
-      <Container>
-      <h2>Albums</h2>
-        <Row className='mx-2 row row-cols-1'>
-          {albums.map((album, i) => (
-            <Card key={i}>
-              <Card.Img src={album.images[0].url} />
-              <Card.Body>
-                <Card.Title>{album.name}</Card.Title>
-                <ListGroup variant="flush">
-                  {tracks[album.id]?.map((track, j) => (
-                    <ListGroup.Item key={j}>{track.name}</ListGroup.Item>
-                  ))}
-                </ListGroup>
-              </Card.Body>
-            </Card>
-          ))}
-        </Row>
-      </Container>
-
+          <Container>
+            <h2>Albums</h2>
+            <Row className='mx-2 row row-cols-1'>
+              {albums.map((album, i) => (
+                <Card key={i}>
+                  <Card.Img src={album.images[0].url} />
+                  <Card.Body>
+                    <Card.Title>{album.name}</Card.Title>
+                    <ListGroup variant="flush">
+                      {tracks[album.id]?.map((track, j) => (
+                        <ListGroup.Item key={j}>{track.name}</ListGroup.Item>
+                      ))}
+                    </ListGroup>
+                  </Card.Body>
+                </Card>
+              ))}
+            </Row>
+          </Container>
+        </>
+      )}
     </div>
   );
 }
