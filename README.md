@@ -19,6 +19,10 @@ npm install
 ```
 
 ### 3. Configurar as Credenciais do Spotify
+
+
+Nota: Por questões de segurança, as credenciais CLIENT_ID e CLIENT_SECRET foram omitidas deste exemplo. Para utilizar o aplicativo, você precisará criar um aplicativo no Spotify Developer Dashboard e inserir suas próprias credenciais no código.
+
 O aplicativo utiliza a API do Spotify e requer credenciais de desenvolvedor. Para configurar:
 1. Acesse [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/applications)
 2. Crie um novo aplicativo e obtenha o `CLIENT_ID` e `CLIENT_SECRET`
